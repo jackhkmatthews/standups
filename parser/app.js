@@ -3,6 +3,8 @@ const fs = require('fs');
 
 const filename = 'week.txt';
 
+const output = {};
+
 fs.readFile(filename, 'utf8', function(err, data) {
   
   let parser = new Parser();
@@ -25,6 +27,8 @@ fs.readFile(filename, 'utf8', function(err, data) {
   console.log(json[0]);
   const formation = json[0].match(/(\w+)/ig);
   console.log('formation', formation);
+  output.formation = formation;
+  console.log(output);
 });
 
 
@@ -48,5 +52,15 @@ fs.readFile(filename, 'utf8', function(err, data) {
   });
   const order = json[0].match(/(\w+)/ig);
   console.log('order', order);
+  output.passes = order.map((name, index, array) => {
+    if (index === array.length -1) return;
+    const pass = {
+      passIndex: index,
+      from: name,
+      to: array[index + 1]
+    };
+    return pass;
+  });
+  console.log(output);
 });
 
