@@ -4,7 +4,7 @@ const svg = d3.select('svg')
 
 const originX = 200;
 const originY = 200;
-const outerCircleRadius = 60;
+const outerCircleRadius = 100;
 
 const outerCircle = svg.append('circle').attrs({
   cx: originX,
@@ -18,8 +18,8 @@ const outerCircle = svg.append('circle').attrs({
 let augmentedFormation = [];
 
 data.days[0].formation.forEach((name, index, array) => {
-  const chairOriginX = originX + ((60) * Math.sin(((2*Math.PI)/array.length)*index));
-  const chairOriginY = originY - ((60) * Math.cos(((2*Math.PI)/array.length)*index));
+  const chairOriginX = originX + ((outerCircleRadius) * Math.sin(((2*Math.PI)/array.length)*index));
+  const chairOriginY = originY - ((outerCircleRadius) * Math.cos(((2*Math.PI)/array.length)*index));
   const coordinate = [chairOriginX, chairOriginY];
   const person = {
     name,
