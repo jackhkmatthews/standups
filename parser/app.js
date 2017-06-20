@@ -24,9 +24,7 @@ fs.readFile(filename, 'utf8', function(err, data) {
   json = json.map(element => {
     return element.text;
   });
-  console.log(json[0]);
   const formation = json[0].match(/(\w+)/ig);
-  console.log('formation', formation);
   output.formation = formation;
   console.log(output);
 });
@@ -51,7 +49,6 @@ fs.readFile(filename, 'utf8', function(err, data) {
     return element.text;
   });
   const order = json[0].match(/(\w+)/ig);
-  console.log('order', order);
   output.passes = order.map((name, index, array) => {
     if (index === array.length -1) return;
     const pass = {
