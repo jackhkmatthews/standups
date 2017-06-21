@@ -1,63 +1,49 @@
-let Parser = require('simple-text-parser');
 const fs = require('fs');
 
 const filename = 'week.txt';
 
-const output = {};
+const week = [];
 
-fs.readFile(filename, 'utf8', function(err, data) {
-  
-  let parser = new Parser();
-
-  parser.addRule(/:.*?\|/ig, function(formation) {
-    return { type: 'formation', text: formation };
-  });
+fs.readFile(filename, 'utf8', function(err, dataAsString) {
 
 
-  let fileAsString = '';
-  if (err) throw err;
-  fileAsString = data;
-  let json = parser.toTree(fileAsString);
-  json = json.filter((element) => {
-    return (element.type === 'formation');
-  })
-  json = json.map(element => {
-    return element.text;
-  });
-  const formation = json[0].match(/(\w+)/ig);
-  output.formation = formation;
-  console.log(output);
-});
+  const formationsAsStrings = dataAsString.match(/:.*?\|/ig);
 
 
-fs.readFile(filename, 'utf8', function(err, data) {
-
-  let parser = new Parser();
-
-  parser.addRule(/\|.*/ig, function(order) {
-    return { type: 'order', text: order };
-  });
-
-  let fileAsString = '';
-  if (err) throw err;
-  fileAsString = data;
-  let json = parser.toTree(fileAsString);
-  json = json.filter((element) => {
-    return (element.type === 'order');
-  });
-  json = json.map(element => {
-    return element.text;
-  });
-  const order = json[0].match(/(\w+)/ig);
-  output.passes = order.map((name, index, array) => {
-    if (index === array.length -1) return;
-    const pass = {
-      passIndex: index,
-      from: name,
-      to: array[index + 1]
+  formationsAsStrings.forEach((formationAsString, index, array) => {
+    const formationAsArray = formationAsString.match(/(\w+)/ig);
+    const day = {
+      formation: formationAsArray
     };
-    return pass;
+    week.push(day);
   });
-  console.log(output);
+
+
+  const ordersAsStrings = dataAsString.match(/\|.*/ig);
+
+
+  ordersAsStrings.forEach((orderAsString, index, array) => {
+    const orderAsArray = orderAsString.match(/(\w+)/ig);
+    const passes = [];
+    orderAsArray.forEach((name, index, array) => {
+      const pass = {
+        passIndex: index,
+        from: name,
+        to: array[index + 1]
+      };
+      passes.push(pass);
+    });
+    week[index].passes = passes;
+  });
+
+  const datesAsStrings = dataAsString.match(/..\/..\/..../ig);
+
+
+  datesAsStrings.forEach((dateAsString, index, array) => {
+    week[index].date = dateAsString;
+  });
+
+  console.log(JSON.stringify(week, null, 4));
+
 });
 
