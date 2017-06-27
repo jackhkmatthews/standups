@@ -8,5 +8,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "standup-parser": "git://github.com/jackhkmatthews/node-standups#v1.0.1"
+  }
 }
