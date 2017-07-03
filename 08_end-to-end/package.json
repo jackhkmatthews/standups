@@ -1,0 +1,17 @@
+{
+  "name": "08_end-to-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "d3": "^4.9.1",
+    "d3-selection-multi": "^1.0.1",
+    "jsdom": "^11.1.0",
+    "standup-parser": "git://github.com/jackhkmatthews/node-standups#v1.0.1"
+  },
+  "author": "",
+  "license": "ISC"
+}
